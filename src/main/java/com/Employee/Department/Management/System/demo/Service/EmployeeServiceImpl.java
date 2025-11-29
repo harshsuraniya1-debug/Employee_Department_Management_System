@@ -4,7 +4,7 @@ package com.Employee.Department.Management.System.demo.Service;
 import com.Employee.Department.Management.System.demo.Dto.EmployeeDto;
 import com.Employee.Department.Management.System.demo.entity.Department;
 import com.Employee.Department.Management.System.demo.entity.Employee;
-//import com.Employee.Department.Management.System.demo.exception.ResourceNotFoundException;
+import com.Employee.Department.Management.System.demo.exception.ResourceNotFoundException;
 import com.Employee.Department.Management.System.demo.Repositories.DepartmentRepository;
 import com.Employee.Department.Management.System.demo.Repositories.EmployeeRepository;
 import com.Employee.Department.Management.System.demo.Service.EmployeeService;
