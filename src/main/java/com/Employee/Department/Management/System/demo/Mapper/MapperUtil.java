@@ -10,6 +10,17 @@ import java.util.stream.Collectors;
 
 public class MapperUtil {
 
+    // 🔹 DepartmentDto → Department
+    public static Department toDepartmentEntity(DepartmentDto dto) {
+        if (dto == null) return null;
+
+        Department department = new Department();
+      //  department.setId(dto.getId());
+        department.setName(dto.getName());
+        department.setDescription(dto.getDescription());
+        return department;
+    }
+
     // 🔹 Department → DepartmentDto
     public static DepartmentDto toDepartmentDto(Department department) {
         if (department == null) return null;
@@ -17,28 +28,8 @@ public class MapperUtil {
         DepartmentDto dto = new DepartmentDto();
         dto.setId(department.getId());
         dto.setName(department.getName());
-        dto.setLocation(department.getLocation());
-
-        // Convert employees list only if present
-        if (department.getEmployees() != null) {
-            dto.setEmployees(department.getEmployees()
-                    .stream()
-                    .map(MapperUtil::toEmployeeDtoWithoutDepartment) // prevent infinite loop
-                    .collect(Collectors.toList())
-            );
-        }
+        dto.setDescription(department.getDescription());
         return dto;
-    }
-
-    // 🔹 DepartmentDto → Department
-    public static Department toDepartmentEntity(DepartmentDto dto) {
-        if (dto == null) return null;
-
-        Department department = new Department();
-        department.setId(dto.getId());
-        department.setName(dto.getName());
-        department.setLocation(dto.getLocation());
-        return department;
     }
 
     // 🔹 Employee → EmployeeDto (with Department)
@@ -48,9 +39,9 @@ public class MapperUtil {
         EmployeeDto dto = new EmployeeDto();
         dto.setId(employee.getId());
         dto.setName(employee.getName());
-        dto.setAge(employee.getAge());
+        dto.setEmail(employee.getEmail());
         dto.setSalary(employee.getSalary());
-        dto.setDepartment(toDepartmentDto(employee.getDepartment())); // includes department
+        dto.setDepartmentId(employee.getDepartment().getId());// includes department
         return dto;
     }
 
@@ -61,7 +52,7 @@ public class MapperUtil {
         EmployeeDto dto = new EmployeeDto();
         dto.setId(employee.getId());
         dto.setName(employee.getName());
-        dto.setAge(employee.getAge());
+        dto.setEmail(employee.getEmail());
         dto.setSalary(employee.getSalary());
         return dto;
     }
@@ -73,7 +64,7 @@ public class MapperUtil {
         Employee employee = new Employee();
         employee.setId(dto.getId());
         employee.setName(dto.getName());
-        employee.setAge(dto.getAge());
+        employee.setEmail(dto.getEmail());
         employee.setSalary(dto.getSalary());
         return employee;
     }

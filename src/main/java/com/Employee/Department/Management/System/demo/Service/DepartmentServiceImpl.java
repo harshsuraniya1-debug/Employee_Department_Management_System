@@ -7,15 +7,19 @@ import com.Employee.Department.Management.System.demo.entity.Department;
 import com.Employee.Department.Management.System.demo.Repositories.DepartmentRepository;
 import com.Employee.Department.Management.System.demo.Service.DepartmentService;
 import com.Employee.Department.Management.System.demo.Mapper.MapperUtil;
+import com.Employee.Department.Management.System.demo.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
 
+    @Autowired
     private final DepartmentRepository departmentRepository;
 
     @Override
@@ -27,11 +31,19 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<DepartmentDto> getAllDepartments() {
-        return departmentRepository.findAll()
-                .stream()
-                .map(MapperUtil::toDepartmentDto)
-                .toList();
+
+        List<Department> departmentList = departmentRepository.findAll();
+
+        List<DepartmentDto> dtoList = new ArrayList<>();
+
+        for (Department department : departmentList) {
+            DepartmentDto dto = MapperUtil.toDepartmentDto(department);
+            dtoList.add(dto);
+        }
+
+        return dtoList;
     }
+
 
     @Override
     public DepartmentDto getDepartmentById(Long id) {

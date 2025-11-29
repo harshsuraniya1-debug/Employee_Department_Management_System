@@ -1,11 +1,13 @@
 package com.Employee.Department.Management.System.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "departments")
 public class Department {
 

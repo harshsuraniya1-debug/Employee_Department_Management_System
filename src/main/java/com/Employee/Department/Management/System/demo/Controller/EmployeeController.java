@@ -1,7 +1,9 @@
 package com.Employee.Department.Management.System.demo.Controller;
 
 import com.Employee.Department.Management.System.demo.Dto.EmployeeDto;
+import com.Employee.Department.Management.System.demo.Service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,26 +13,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployeeController {
 
+    @Autowired
     private final EmployeeService employeeService;
 
     @PostMapping
-    public EmployeeDto createEmployee(@RequestBody EmployeeDto dto) {
-        return employeeService.create(dto);
+    public EmployeeDto createEmployee(@RequestBody Long id ,EmployeeDto dto) {
+        return employeeService.createEmployee(id ,dto);
     }
 
     @GetMapping("/by-department/{deptId}")
     public List<EmployeeDto> employeesByDepartment(@PathVariable Long deptId) {
-        return employeeService.employeesByDepartment(deptId);
-    }
+     return employeeService.getEmployeesByDepartment(deptId);
+         }
 
     @PutMapping("/{empId}/transfer/{deptId}")
     public EmployeeDto transfer(@PathVariable Long empId, @PathVariable Long deptId) {
-        return employeeService.transfer(empId, deptId);
+        return employeeService.transferEmployee(empId,deptId);
     }
 
-    @GetMapping("/salary-report/{deptId}")
-    public Double salaryReport(@PathVariable Long deptId) {
-        return employeeService.salaryReport(deptId);
+    @GetMapping()
+    public List<EmployeeDto> getall() {
+        return employeeService.getAllEmployees();
     }
 }
 
