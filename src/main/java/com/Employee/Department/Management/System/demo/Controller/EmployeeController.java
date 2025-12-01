@@ -17,8 +17,8 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping
-    public EmployeeDto createEmployee(@RequestBody Long id ,EmployeeDto dto) {
-        return employeeService.createEmployee(id ,dto);
+    public EmployeeDto createEmployee(@RequestBody EmployeeDto dto) {
+        return employeeService.createEmployee(dto);
     }
 
     @GetMapping("/by-department/{deptId}")

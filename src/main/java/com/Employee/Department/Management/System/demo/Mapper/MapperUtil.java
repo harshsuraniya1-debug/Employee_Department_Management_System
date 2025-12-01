@@ -6,6 +6,8 @@ import com.Employee.Department.Management.System.demo.Dto.EmployeeDto;
 import com.Employee.Department.Management.System.demo.entity.Department;
 import com.Employee.Department.Management.System.demo.entity.Employee;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class MapperUtil {
@@ -15,9 +17,9 @@ public class MapperUtil {
         if (dto == null) return null;
 
         Department department = new Department();
-      //  department.setId(dto.getId());
         department.setName(dto.getName());
         department.setDescription(dto.getDescription());
+
         return department;
     }
 
@@ -29,6 +31,9 @@ public class MapperUtil {
         dto.setId(department.getId());
         dto.setName(department.getName());
         dto.setDescription(department.getDescription());
+        dto.setEmployeeIds(
+                department.getEmployeeslist().stream().map(Employee::getId).toList()
+        );
         return dto;
     }
 
@@ -41,21 +46,12 @@ public class MapperUtil {
         dto.setName(employee.getName());
         dto.setEmail(employee.getEmail());
         dto.setSalary(employee.getSalary());
-        dto.setDepartmentId(employee.getDepartment().getId());// includes department
+        if(employee.getDepartment() != null){
+            dto.setDepartmentId(employee.getDepartment().getId());
+        }
         return dto;
     }
 
-    // 🔹 Employee → EmployeeDto (WITHOUT Department)
-    public static EmployeeDto toEmployeeDtoWithoutDepartment(Employee employee) {
-        if (employee == null) return null;
-
-        EmployeeDto dto = new EmployeeDto();
-        dto.setId(employee.getId());
-        dto.setName(employee.getName());
-        dto.setEmail(employee.getEmail());
-        dto.setSalary(employee.getSalary());
-        return dto;
-    }
 
     // 🔹 EmployeeDto → Employee
     public static Employee toEmployeeEntity(EmployeeDto dto) {

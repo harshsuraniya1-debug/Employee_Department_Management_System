@@ -26,12 +26,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentRepository departmentRepository;
 
     @Override
-    public EmployeeDto createEmployee(Long departmentId, EmployeeDto dto) {
-        Department department = departmentRepository.findById(departmentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Department not found with id " + departmentId));
-
+    public EmployeeDto createEmployee(EmployeeDto dto) {
         Employee employee = MapperUtil.toEmployeeEntity(dto);
-        employee.setDepartment(department);
+        if(dto.getDepartmentId() != null){
+            Department department = departmentRepository.findById(dto.getDepartmentId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Department not found with id " + dto.getDepartmentId()));
+
+            employee.setDepartment(department);
+        }
 
         Employee saved = employeeRepository.save(employee);
         return MapperUtil.toEmployeeDto(saved);
