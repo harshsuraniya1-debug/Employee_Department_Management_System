@@ -21,6 +21,18 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentDto createDepartment(DepartmentDto dto) {
         Department department = MapperUtil.toDepartmentEntity(dto);
+<<<<<<< Updated upstream
+=======
+        if(dto.getEmployeeIds() != null &&
+        !dto.getEmployeeIds().isEmpty()){
+            List<Employee> employees = fetchEmplyeeList(dto.getEmployeeIds());
+
+            for(Employee emp : employees){
+                emp.setDepartment(department);
+            }
+
+            department.setEmployeeslist(employees);        }
+>>>>>>> Stashed changes
         Department savedDept = departmentRepository.save(department);
         return MapperUtil.toDepartmentDto(savedDept);
     }
